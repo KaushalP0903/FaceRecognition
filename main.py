@@ -1,4 +1,6 @@
 import cv2
+import os
+from datetime import datetime
 
 from core.frame_manager import FrameManager
 from core.detector import PersonDetector
@@ -21,6 +23,63 @@ from config.configurations import (
     POSE_ESTIMATION,
     DETECTION_INTERVAL
 )
+
+def save_enrollment_image(
+    face_img,
+    person_name,
+    sample_no
+):
+
+    folder = os.path.join(
+        "face_logs",
+        "enrollments",
+        person_name
+    )
+
+    os.makedirs(
+        folder,
+        exist_ok=True
+    )
+
+    filename = os.path.join(
+        folder,
+        f"enroll_{sample_no:02d}.jpg"
+    )
+
+    cv2.imwrite(
+        filename,
+        face_img
+    )
+
+def save_detection_frame(
+    frame,
+    identity
+):
+
+    folder = os.path.join(
+        "face_logs",
+        "detections",
+        identity
+    )
+
+    os.makedirs(
+        folder,
+        exist_ok=True
+    )
+
+    timestamp = datetime.now().strftime(
+        "%Y%m%d_%H%M%S"
+    )
+
+    filename = os.path.join(
+        folder,
+        f"{timestamp}.jpg"
+    )
+
+    cv2.imwrite(
+        filename,
+        frame
+    )
 
 def main():
 
@@ -125,6 +184,7 @@ def main():
 
             if enroll_mode:
                 enroll_embeddings.append(embedding)
+                save_enrollment_image(aligned_face, enroll_name, len(enroll_embeddings))
 
                 print(f"[INFO] Captured " f"{len(enroll_embeddings)} / " f"{ENROLL_SAMPLES}")
 
@@ -156,6 +216,7 @@ def main():
             t["score"] = score
 
             if identity != "Unknown":
+                save_detection_frame( frame, identity)
                 locked_matches[track_id] = (identity, score)
 
             final_tracks.append(t)

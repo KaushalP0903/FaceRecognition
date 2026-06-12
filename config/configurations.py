@@ -2,7 +2,8 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-USE_YOLO = False
+#USE_YOLO = False
+USE_PERSON_DETECTOR = False
 
 FRAME_SKIP = 0
 
@@ -10,7 +11,9 @@ CAMERA_SOURCE = 0
 
 FRAME_SIZE = (640, 480)
 
-YOLO_MODEL = str(BASE_DIR / "models" / "best.pt")
+#YOLO_MODEL = str(BASE_DIR / "models" / "best.pt")
+
+RTDETR_MODEL = str(BASE_DIR / "models" / "rtdetr_r18vd")
 RETINAFACE_MODEL = str(BASE_DIR / "models" / "retinaface" / "detector.onnx")
 ARCFACE_MODEL = str(BASE_DIR / "models" / "arcface" / "arcface.onnx")
 LANDMARK106_MODEL = str(BASE_DIR / "models" / "retinaface" / "2d106det.onnx")
@@ -21,6 +24,9 @@ POSE_MODEL = str(BASE_DIR / "models" / "retinaface" / "1k3d68.onnx")
 DATABASE_PATH = str(BASE_DIR / "database" / "faces.pkl")
 
 CTX_ID = 0  # GPU = 0, CPU = -1
+
+PERSON_CONF_THRESHOLD = 0.5
+DETECTION_INTERVAL = 5
 
 FACE_CONF_THRESHOLD = 0.8
 FACE_MARGIN = 20

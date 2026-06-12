@@ -18,7 +18,8 @@ from config.configurations import (
     MAX_YAW,
     MAX_PITCH,
     MAX_ROLL,
-    POSE_ESTIMATION
+    POSE_ESTIMATION,
+    DETECTION_INTERVAL
 )
 
 def main():
@@ -48,7 +49,8 @@ def main():
         if frame is None:
             break
 
-        if frame_manager.frame_count % max(1, FRAME_SKIP) == 0:
+        #if frame_manager.frame_count % max(1, FRAME_SKIP) == 0:
+        if frame_manager.frame_count % DETECTION_INTERVAL == 0:
             persons = person_detector.detect(frame)
             detections = face_detector.detect(frame, persons)
             prev_detections = detections
@@ -89,8 +91,6 @@ def main():
                 continue
 
             face_crop = frame[y1:y2, x1:x2]
-
-            landmarks106 = landmark106.get_landmarks(frame, (x1, y1, x2, y2))
 
             if landmarks106 is None:
                 continue

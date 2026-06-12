@@ -20,7 +20,7 @@ POSE_MODEL = str(BASE_DIR / "models" / "retinaface" / "1k3d68.onnx")
 
 DATABASE_PATH = str(BASE_DIR / "database" / "faces.pkl")
 
-CTX_ID = -1  # GPU = 0, CPU = -1
+CTX_ID = 0  # GPU = 0, CPU = -1
 
 FACE_CONF_THRESHOLD = 0.8
 FACE_MARGIN = 20
